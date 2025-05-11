@@ -1,11 +1,11 @@
-#include "stdafx.h"
-#include "fishgame.h"
-#include <QtWidgets/QApplication>
+#include "gamewindow.h"
+#include <QApplication>
 
-int main(int argc, char *argv[])
-{
+int main(int argc, char* argv[]) {
     QApplication a(argc, argv);
-    fishgame w;
+
+    GameWindow w;
     w.show();
+
     return a.exec();
 }

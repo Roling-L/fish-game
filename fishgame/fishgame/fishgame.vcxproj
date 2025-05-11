@@ -27,8 +27,7 @@
     <ApplicationTypeRevision Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">10.0</ApplicationTypeRevision>
     <DefaultLanguage Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">en</DefaultLanguage>
     <AppContainerApplication Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">true</AppContainerApplication>
-    <QtMsBuild Condition="'$(QtMsBuild)'=='' OR !Exists('$(QtMsBuild)\qt.targets')"
-      >$(MSBuildProjectDirectory)\QtMsBuild</QtMsBuild>
+    <QtMsBuild Condition="'$(QtMsBuild)'=='' OR !Exists('$(QtMsBuild)\qt.targets')">$(MSBuildProjectDirectory)\QtMsBuild</QtMsBuild>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'" Label="Configuration">
@@ -68,11 +67,8 @@
     <QtDeployToProjectDir>true</QtDeployToProjectDir>
     <QtDeployVsContent>true</QtDeployVsContent>
   </PropertyGroup>
-  <Target Name="QtMsBuildNotFound"
-    BeforeTargets="CustomBuild;ClCompile"
-    Condition="!Exists('$(QtMsBuild)\qt.targets') or !Exists('$(QtMsBuild)\qt.props')">
-    <Message Importance="High"
-      Text="QtMsBuild: could not locate qt.targets, qt.props; project may not build correctly." />
+  <Target Name="QtMsBuildNotFound" BeforeTargets="CustomBuild;ClCompile" Condition="!Exists('$(QtMsBuild)\qt.targets') or !Exists('$(QtMsBuild)\qt.props')">
+    <Message Importance="High" Text="QtMsBuild: could not locate qt.targets, qt.props; project may not build correctly." />
   </Target>
   <ImportGroup Label="ExtensionSettings" />
   <ImportGroup Label="Shared" />
@@ -142,26 +138,27 @@
     </QtMoc>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <QtRcc Include="fishgame.qrc"/>
-    <QtUic Include="fishgame.ui"/>
-    <QtMoc Include="fishgame.h"/>
-    <ClCompile Include="fishgame.cpp"/>
-    <ClCompile Include="main.cpp"/>
+    <QtRcc Include="fishgame.qrc" />
+    <QtUic Include="fishgame.ui" />
+    <ClInclude Include="fishgame.h" />
+    <ClCompile Include="fishgame.cpp" />
+    <ClCompile Include="gamescene.cpp" />
+    <ClCompile Include="gamewindow.cpp" />
+    <ClCompile Include="main.cpp" />
     <AppxManifest Include="Package.appxmanifest">
     </AppxManifest>
-    <Image Include="assets/logo_store.png">
-    </Image>
-    <Image Include="assets/logo_620x300.png">
-    </Image>
-    <Image Include="assets/logo_150x150.png">
-    </Image>
-    <Image Include="assets/logo_44x44.png">
-    </Image>
+    <QtMoc Include="gamescene.h" />
+    <QtMoc Include="gamewindow.h" />
     <ClInclude Include="stdafx.h" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="fishgame.pro" />
+    <None Include="images" />
+    <None Include="sounds" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

@@ -1,16 +1,34 @@
-#pragma once
+#ifndef FISH_H
+#define FISH_H
 
-#include <QtWidgets/QMainWindow>
-#include "ui_fishgame.h"
+#include <QGraphicsPixmapItem>
+#include <QPixmap>
 
-class fishgame : public QMainWindow
-{
-    Q_OBJECT
-
+class Fish : public QGraphicsPixmapItem {
 public:
-    fishgame(QWidget *parent = nullptr);
-    ~fishgame();
+    Fish(const QPixmap& pixmap, qreal speed, QGraphicsItem* parent = nullptr);
+    qreal speed;
+};
+
+class PlayerFish : public Fish {
+public:
+    PlayerFish(const QPixmap& pixmap, qreal speed, QGraphicsItem* parent = nullptr);
+    void advance(int phase) override;
+    void grow();
+    int getSizeLevel() const;
+
+protected:
+    int sizeLevel;
+};
+
+class EnemyFish : public Fish {
+public:
+    EnemyFish(const QPixmap& pixmap, qreal speed, int sizeLevel, QGraphicsItem* parent = nullptr);
+    void advance(int phase) override;
+    int getSizeLevel() const;
 
 private:
-    Ui::fishgameClass ui;
+    int sizeLevel;
 };
+
+#endif // FISH_H
